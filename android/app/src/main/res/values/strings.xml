@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TurboCoaster</string>
+    <string name="title_activity_main">TurboCoaster</string>
+    <string name="package_name">com.example.turbocoaster</string>
+    <string name="custom_url_scheme">com.example.turbocoaster</string>
+</resources>
