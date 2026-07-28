@@ -114,13 +114,18 @@ export class GameScene extends Phaser.Scene {
   }
 
   private createHud(): void {
-    this.add.image(34, 34, 'coin').setScrollFactor(0).setDepth(100).setScale(1.3);
+    const pills = this.add.graphics().setScrollFactor(0).setDepth(99);
+    pills.fillStyle(0x2d2438, 0.4);
+    pills.fillRoundedRect(12, 12, 150, 46, 23);
+    pills.fillRoundedRect(GAME_WIDTH - 192, 12, 180, 46, 23);
+
+    this.add.image(38, 35, 'coin').setScrollFactor(0).setDepth(100).setScale(1.25);
     this.coinText = this.add
-      .text(56, 20, '0', textStyle(28, '#ffd23f'))
+      .text(60, 20, '0', textStyle(28, '#ffd166'))
       .setScrollFactor(0)
       .setDepth(100);
     this.scoreText = this.add
-      .text(GAME_WIDTH - 24, 20, '0', textStyle(28, '#ffffff'))
+      .text(GAME_WIDTH - 28, 20, '0', textStyle(28, '#ffffff'))
       .setOrigin(1, 0)
       .setScrollFactor(0)
       .setDepth(100);
@@ -139,12 +144,38 @@ export class GameScene extends Phaser.Scene {
       this.vy = -JUMP_VELOCITY;
       this.jumps = 1;
       sfx.jump();
+      this.stretchCart();
     } else if (this.jumps === 1) {
       this.vy = -DOUBLE_JUMP_VELOCITY;
       this.jumps = 2;
       sfx.doubleJump();
       this.burst.explode(6, this.cartX, this.cartY);
+      this.stretchCart();
     }
+  }
+
+  /** Allungamento cartoon in salto. */
+  private stretchCart(): void {
+    this.tweens.add({
+      targets: this.cart,
+      scaleX: 0.86,
+      scaleY: 1.16,
+      duration: 110,
+      yoyo: true,
+      ease: 'Sine.easeOut'
+    });
+  }
+
+  /** Schiacciamento cartoon all'atterraggio. */
+  private squashCart(): void {
+    this.tweens.add({
+      targets: this.cart,
+      scaleX: 1.18,
+      scaleY: 0.8,
+      duration: 90,
+      yoyo: true,
+      ease: 'Sine.easeOut'
+    });
   }
 
   update(time: number, delta: number): void {
@@ -221,6 +252,7 @@ export class GameScene extends Phaser.Scene {
           this.grounded = true;
           this.jumps = 0;
           this.burst.explode(4, this.cartX, this.cartY);
+          this.squashCart();
         } else {
           // schianto contro la parete di un binario più alto
           this.crash();
@@ -337,6 +369,8 @@ export class GameScene extends Phaser.Scene {
   private crash(): void {
     if (this.state === 'dead') return;
     this.state = 'dead';
+    this.hasShield = false;
+    this.shieldRing.setVisible(false);
     sfx.crash();
     this.cameras.main.shake(350, 0.012);
     this.cameras.main.flash(200, 255, 80, 60);

@@ -121,26 +121,35 @@ export class Track {
       const slope = (s.y1 - s.y0) / (s.x1 - s.x0);
       const yAt = (x: number) => s.y0 + (x - s.x0) * slope;
 
-      // piloni
-      g.fillStyle(0x4a3524, 0.9);
+      // piloni con contorno e faccia illuminata
       const firstPillar = Math.ceil(s.x0 / 96) * 96;
       for (let px = firstPillar; px < s.x1; px += 96) {
-        g.fillRect(px - 4, yAt(px) + 6, 8, GAME_HEIGHT - yAt(px));
+        const top = yAt(px) + 8;
+        g.fillStyle(0x2d2438, 0.85);
+        g.fillRect(px - 7, top, 14, GAME_HEIGHT - top);
+        g.fillStyle(0x9c6b3f);
+        g.fillRect(px - 5, top + 2, 10, GAME_HEIGHT - top);
+        g.fillStyle(0xc08a54);
+        g.fillRect(px - 5, top + 2, 4, GAME_HEIGHT - top);
       }
 
       // traversine
-      g.fillStyle(0x6b4a2f);
       for (let tx = s.x0 + 10; tx < s.x1 - 4; tx += 26) {
-        g.fillRect(tx - 3, yAt(tx) - 2, 7, 14);
+        g.fillStyle(0x2d2438, 0.85);
+        g.fillRect(tx - 4.5, yAt(tx) - 3, 10, 18);
+        g.fillStyle(0xd9813b);
+        g.fillRect(tx - 3, yAt(tx) - 1.5, 7, 15);
       }
 
-      // rotaie (doppia linea stile montagne russe)
-      g.lineStyle(5, 0x8a5a33);
+      // rotaie: contorno scuro + legno caldo + filo di luce
+      g.lineStyle(9, 0x2d2438, 0.9);
       g.lineBetween(s.x0, s.y0, s.x1, s.y1);
-      g.lineStyle(5, 0x8a5a33);
       g.lineBetween(s.x0, s.y0 + 12, s.x1, s.y1 + 12);
-      g.lineStyle(2, 0xd9a55f);
-      g.lineBetween(s.x0, s.y0 - 2, s.x1, s.y1 - 2);
+      g.lineStyle(5, 0xc08a54);
+      g.lineBetween(s.x0, s.y0, s.x1, s.y1);
+      g.lineBetween(s.x0, s.y0 + 12, s.x1, s.y1 + 12);
+      g.lineStyle(2, 0xf0c184);
+      g.lineBetween(s.x0, s.y0 - 1.5, s.x1, s.y1 - 1.5);
     }
   }
 }
