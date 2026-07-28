@@ -1,0 +1,9 @@
+{
+  "appId": "com.example.turbocoaster",
+  "appName": "TurboCoaster",
+  "webDir": "dist",
+  "backgroundColor": "#2a9fd8",
+  "ios": {
+    "contentInset": "never"
+  }
+}
