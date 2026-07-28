@@ -7,6 +7,9 @@ creaturine per punti bonus ed eviti barriere e voragini.
 Un unico codice TypeScript ([Phaser 3](https://phaser.io)) gira su **iOS**, **Android**
 (tramite [Capacitor](https://capacitorjs.com)) e nel browser.
 
+> 📖 Documentazione completa (game design, architettura, tuning, pubblicazione
+> sugli store, roadmap): [DOCUMENTAZIONE.md](DOCUMENTAZIONE.md)
+
 > **Nota legale** — Questo progetto riprende solo le *meccaniche* di gioco, che non sono
 > protette da copyright. Tutta la grafica è generata proceduralmente da codice, gli effetti
 > sonori sono sintetizzati via WebAudio e il nome è provvisorio: prima di pubblicare
